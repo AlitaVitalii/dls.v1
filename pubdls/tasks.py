@@ -70,3 +70,4 @@ def parser():
                 ["alita.avs@gmail.com"],
                 fail_silently=False,
             )
+
