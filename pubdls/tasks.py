@@ -64,7 +64,7 @@ def parser():
             message = [f'|->   {i.drug_name} -- {i.serial_num} -- {i.manufacture}. ' for i in regnum_list]
             send_mail(
                 f'Pub DLS! Нових разпоряджень: {len(regnum_list)}',
-                f'{"__________________________________________________________________________".join(message)} \n',
+                f'{"__________________________________________________________________________".join(message)}',
                 # f"{[f'|||        {i.drug_name}  -  {i.manufacture}.          ' for i in regnum_list]}",
                 "alita.v@ukr.net",
                 ["alita.avs@gmail.com"],
