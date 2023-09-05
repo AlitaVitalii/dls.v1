@@ -9,5 +9,5 @@ from pubdls.models import Regnum
 
 @admin.register(Regnum)
 class RegnumAdmin(admin.ModelAdmin):
-    list_display = ('reg_num', 'reg_date', 'doc_type', 'rp_number', 'drug_name', 'serial_num', 'manufacture')
+    list_display = ('reg_num', 'reg_date', 'doc_type', 'rp_number', 'drug_name', 'serial_num', 'manufacture', 'pub_date')
     list_filter = ['reg_date']

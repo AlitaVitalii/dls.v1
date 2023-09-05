@@ -13,6 +13,7 @@ app.conf.beat_schedule = {
     'news-parser': {
         'task': 'pubdls.tasks.parser',
         'schedule': crontab(),
+        # 'schedule': crontab(minute=0, hour='9, 17')  #
         # 'schedule': crontab(minute=0, hour='*/6')  # каждые 6 часов
         # 'schedule': crontab(minute=0, hour='1-23/2')  # каждый нечетный час
     },

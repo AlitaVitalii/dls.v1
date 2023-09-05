@@ -24,15 +24,9 @@ def parser():
         'ctl00$ContentPlaceHolder1$txtDateTo': end_date,
         'ctl00$ContentPlaceHolder1$Button1': 'Запит'
     })
-    # regdate_list = []
-    regnum_list = []
-    # doctype_list = []
-    # rpnumber_list = []
-    # drugname_list = []
-    # serialnum_list = []
-    # manufacture_list = []
 
-    # while True:
+    regnum_list = []
+
     if r.status_code == 200:
         soup = BeautifulSoup(r.text, 'html.parser')
         soup_rows = soup.select('tr[class$="Row"]')
@@ -67,9 +61,11 @@ def parser():
                 fail_silently=False,
             )
         if len(regnum_list) > 0:
+            message = [f'|->   {i.drug_name} -- {i.serial_num} -- {i.manufacture}. ' for i in regnum_list]
             send_mail(
                 f'Pub DLS! Нових разпоряджень: {len(regnum_list)}',
-                f"{[f'|||        {i.drug_name}  -  {i.manufacture}.          ' for i in regnum_list]}",
+                f'{"__________________________________________________________________________".join(message)} \n',
+                # f"{[f'|||        {i.drug_name}  -  {i.manufacture}.          ' for i in regnum_list]}",
                 "alita.v@ukr.net",
                 ["alita.avs@gmail.com"],
                 fail_silently=False,
