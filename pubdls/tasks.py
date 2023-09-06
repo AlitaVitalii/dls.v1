@@ -1,4 +1,6 @@
 from datetime import datetime
+import random
+
 import requests
 from bs4 import BeautifulSoup
 from celery import shared_task
@@ -9,10 +11,20 @@ from pubdls.models import Regnum
 
 @shared_task()
 def parser():
+    # Заголовки запроса с имитацией браузера
+    user_agents = [
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.3'
+    ]
+    headers = {
+        'User-Agent': random.choice(user_agents),
+        'Referer': 'http://pub-mex.dls.gov.ua/QLA/DocList.aspx'  # Добавляем Referer для большей натуральности
+    }
+
     start_date = '01-01-2023'
     end_date = '04-01-2023'
     # r = requests.get("http://pub-mex.dls.gov.ua/QLA/DocList.aspx")
-    r = requests.post("http://pub-mex.dls.gov.ua/QLA/DocList.aspx", data={
+    r = requests.post("http://pub-mex.dls.gov.ua/QLA/DocList.aspx", headers=headers, data={
         'ctl00$ScriptManager1': 'ctl00$UpdatePanel1|ctl00$ContentPlaceHolder1$Button1',
         '__EVENTTARGET': '',
         '__EVENTARGUMENT': '',
@@ -37,7 +49,7 @@ def parser():
                                            serial_num=str(soup_rows[i].select('td[id$="SerialNum"]'))[49:-6]
                                            )
             if not regnum:
-                date_string = str(soup_rows[i].select('td[id$="RegDate"]'))[73:-6]
+                date_string = str(soup_rows[i].select('td[id$="RegDate"]'))[82:-6]
                 date_object = datetime.strptime(date_string, "%d.%m.%Y")
                 new_date_string = date_object.strftime("%Y-%m-%d")
 
