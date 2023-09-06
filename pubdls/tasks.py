@@ -49,6 +49,7 @@ def parser():
                     drug_name=str(soup_rows[i].select('td[id$="DrugNameAndFormtypeDesc"]'))[63:-6],
                     serial_num=str(soup_rows[i].select('td[id$="SerialNum"]'))[49:-6],
                     manufacture=str(soup_rows[i].select('td[id$="ProducerAndCountry"]'))[58:-6],
+                    notes=str(soup_rows[i].select('td[id$="Notes"]'))[45:-6],
 
                 )
                 regnum_list.append(reg_number)
